@@ -1,0 +1,3 @@
+TODO : fix no pipe input to write-*
+
+DONE_TODO : fix null input error to write-*

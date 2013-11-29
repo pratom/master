@@ -1,0 +1,114 @@
+
+<#
+TODO: https://github.com/dahlbyk/posh-git -- add to prompt
+
+TODO: CHECK : Is there a powershell.exe.config file?
+
+TODO: FIX : Create the powershell.exe.config file, using the installed versions of .Net 
+
+TODO: FIX :Edit the powershell.exe config file, using the installed versions of .Net 
+
+TODO: FIX :bypass execution policy
+
+TODO: FIX :unblock a dll from running
+
+ A DLL---------------------------
+ * TODO: CHECK : Does the DLL exist?
+ * TODO: CHECK : Is the DLL blocked from running? 
+ * TODO: CHECK : Before adding DSN, test to see if the DLL actually exists...This is a reallty good idea for the tribal/checks.ps1 file
+
+
+TODO: in pratom\lib\vm_ware\Get-Credential.ps1, we masked Get-Credential in order to protect the .  Should we be doing the same thing with other user prompts, like Read-Host ?
+
+TODO: We need a memoize function --especially on settings
+
+TODO: I wonder if it is possible to merge 2 powershell memory spaces?  maybe use that to speed up startup?  maybe import-module -PassThru along with Start-Job and Receive-Job ?
+
+TODO: Loading is getting SLOW....Need to 1) be able to figure out where w/o a whole lot of effort.  2) fix whatever is slow right now.
+
+DONE_TODO: replace these with common functions or attributes : assert_caller_is_in_my_file 
+
+TODO: check to see if pratom is already loaded in current environment.  If it is, then do not re-load it ( no -force ).  If in Dev mode, always reload.
+
+TODO: hook up sniffing to write-output
+
+TODO: push the write verb type to the sniffer
+
+TODO: for the "base" pratom sniffer, simplify what is written.  for instance, for write-host, all we probably need is the Message
+
+TODO: Module out as much code as you can.  Makes it more testable.  If import-module with args is the only method available, then use that.
+
+TODO: Really, Really need that object inspector, inspector_gadget, working and working well....
+
+TODO: LOGGING
+
+TODO: Write-Debug / Write-Verbose / Log-Debug / Log-Verbose per method / function. Have them call a function, which then looks up their name to find out if they should log.  should NOT load new everytime..... Good luck with that one.  Maybe just look and see if the file is new?  Get-? takes a filter for datetime...
+
+TODO: WritePretty
+
+TODO: Make Rails verbose, Rails Debug, Rails, etc ---> 100% separate from the powershell environment.  BIG deal...
+
+TODO: Exposure - Figure a way to limit it / Simply note it.  Probably the same as imports, but doing so with a small for loop @ the end of the module.
+
+TODO: Change exposed function names.  How?  When you add_member to a type, you can change the name then.  Alias does allow, BUT both have to be exposed.
+
+TODO: Change names of functions coming out of included modules.  Can't have Modules like Pester exposing methods like "In".  One idea is you could expose pester_in, then allow the user to call "pester_aliases" which would return a string of code, which they could then invoke, which would allow them to purposefully override their current scope. ??? Make use of $MyInvocation.PSCommandPath  to name exposed members.  allow for namespacing , prevent clobbering?
+
+TODO: Pester : Write unit test for each Function exposed by RAILS
+
+TODO: POWERYAML figure it out
+
+TODO: Make POWERYAML available to outside of RAILS.  Does it need to be easier to use?
+
+TODO: Function to launch Windows Powershell ISE
+
+TODO: Figure out how to use Microsoft.PowerShell.Host.ISE.ISEOptions to make Sublime a better powershell editor...
+        * http://technet.microsoft.com/en-us/library/dd819482.aspx
+        * http://www.powertheshell.com/iseconfig/
+
+TODO: If powershell powerrails is a user session, then make sure that the Terminal is Windows PowerShell ISE
+
+TODO: Learn Verbs.....and Nouns and why I should care.....
+
+TODO: Make Pester available to outside of RAILS.
+
+TODO: How am I detecting if exports are clobberin? a) before doing an import of a ps1, b) before exporting out to the calling environment
+
+TODO: Ensure that write-output is used only in output
+
+TODO: $PSSenderInfo - is this a good place to load user configuration?
+    $PSSenderInfo
+       Contains information about the user who started the PSSession, 
+       including  the user identity and the time zone of the originating
+       computer. This variable is available only in PSSessions.
+
+       The $PSSenderInfo variable includes a user-configurable property, 
+       ApplicationArguments, which, by default, contains only the 
+       $PSVersionTable from the originating session. To add data to the 
+       ApplicationArguments property, use the ApplicationArguments parameter
+       of the New-PSSessionOption cmdlet.
+
+TODO: Maybe this is an option for loading modules? http://blog.mikewalker.me/2013/05/pscmdlet-common-parameters-do-not.html
+
+TODO: Understand $error[0] ArgumentOutOfRangeException  inside of a catch block, how can $error[0] be empty?
+
+
+#>
+
+
+<#
+DONE_TODO: Isolate inside of rails, the "core", so that it can be loaded only..
+DONE_TODO: module needs to be able to accept / grab settings.  Like --> ENV_MODE, RAILS_MODULES_CORE, RAILS_MODULES_CORE_ONLY
+DONE_TODO: Change exposed function names.  path_
+DONE_TODO: should powerrails be an global object instead of a bunch of functions?  it could be as simple as loading rails, then, defining $pr global, then exporting the variable $pr?  NO, that sucks.  It also changes how the methods are called.  it would ahve to be $pr.HasMember("blah").  I don't know.  Maybe waaaay later...
+DONE_TODO: Move nucleus outside of core
+DONE_TODO: rename core to rails_core
+DONE_TODO: rename rails to power_rails
+DONE_TODO: Silence warnings about verb names
+DONE_TODO: Python style settings or Ruby / Rails style settings?  I can't remember 
+#>
+
+
+<#
+NOT_TODO: Make sure Progress bars are working properly
+#>

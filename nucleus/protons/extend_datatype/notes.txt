@@ -1,0 +1,62 @@
+extend_datatype
+
+powershell code which adds / exports / extends / attaches members onto existing datatypes
+
+the data types could be any type:
+    * those loaded previously in .Net
+    or
+    * those loaded by add-Type
+
+The extend_datatype startup.ps1 should only be included after all data types have been added.
+
+
+Folders:
+    members --> this is the code which gets attached to a data type.
+    exports --> this is the code which attaches the members to the data type.
+
+Restrictions on code in extend_datatype.psm1 AND code it calls:
+    * this code must NOT make use of any member code extended by this module.  Doing so creates a circular dependency ( at worst ) and at best, means the startup code would have to manage the order of code imports.
+
+
+
+
+
+I wrote this, but didn't need it yet....
+Function extend_datatype_with_property
+{
+    [cmdletbinding()]
+    Param (
+        [Parameter(Mandatory=$True)]$member_name
+        , [Parameter(Mandatory=$True)]$script_block_get
+        , [Parameter(Mandatory=$False)]$script_block_set = $null
+        , [Parameter(Mandatory=$True)]$type_name
+    )
+    if ( $script_block_set -eq $null )
+    {
+        Update-TypeData -TypeName:$type_name -MemberName:$member_name -Force -MemberType:ScriptProperty -Value:$script_block_get   
+    }
+    else {
+       Update-TypeData -TypeName:$type_name -MemberName:$member_name -Force -MemberType:ScriptProperty -Value:$script_block_get -SecondValue:$script_block_set 
+    }
+    return $true
+}
+#>
+
+
+<#   
+.EXAMPLE
+    extend_datatype_with_method -member_name:$member_name -script_block_get:$script_block_get -type_name:System.DateTime
+#>
+<#
+Function extend_datatype_with_method
+{
+    [cmdletbinding()]
+    Param (
+        [Parameter(Mandatory=$True)]$member_name
+        , [Parameter(Mandatory=$True)]$script_block_get
+        , [Parameter(Mandatory=$True)]$type_name
+    )
+    Update-TypeData -TypeName:$type_name -MemberName:$member_name -Force -MemberType:ScriptProperty -Value:$script_block_get   
+    return $true
+}
+#>

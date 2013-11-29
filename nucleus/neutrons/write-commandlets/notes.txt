@@ -1,0 +1,66 @@
+Cmdlet          Write-Debug                                        Microsoft.PowerShell.Utility                                                              
+Cmdlet          Write-Error                                        Microsoft.PowerShell.Utility                                                          
+Cmdlet          Write-Host                                         Microsoft.PowerShell.Utility                                                              
+Cmdlet          Write-Output                                       Microsoft.PowerShell.Utility                                                              
+Cmdlet          Write-Progress                                     Microsoft.PowerShell.Utility                                                              
+Cmdlet          Write-Verbose                                      Microsoft.PowerShell.Utility                                                              
+Cmdlet          Write-Warning                                      Microsoft.PowerShell.Utility 
+
+
+http://latkin.org/blog/2012/04/25/how-to-capture-or-redirect-write-host-output-in-powershell/
+
+http://blogs.msdn.com/b/powershell/archive/2009/01/04/extending-and-or-modifing-commands-with-proxies.aspx
+
+Get-Command
+
+Microsoft.PowerShell.Utility\Write-Debug "asdfadsf"
+Microsoft.PowerShell.Utility\Write-Error "asdfadsf"
+Microsoft.PowerShell.Utility\Write-Host "asdfadsf"
+Microsoft.PowerShell.Utility\Write-Output "asdfadsf"
+Microsoft.PowerShell.Utility\Write-Progress "asdfadsf"
+Microsoft.PowerShell.Utility\Write-Verbose "asdfadsf"
+Microsoft.PowerShell.Utility\Write-Warning "asdfadsf"
+
+
+get-command -commandtype:cmdlet -Syntax -Name:write-Debug 
+get-command -commandtype:cmdlet -Syntax -Name:write-Error 
+get-command -commandtype:cmdlet -Syntax -Name:write-Host 
+get-command -commandtype:cmdlet -Syntax -Name:write-Output 
+get-command -commandtype:cmdlet -Syntax -Name:write-Progress 
+get-command -commandtype:cmdlet -Syntax -Name:write-Verbose 
+get-command -commandtype:cmdlet -Syntax -Name:write-Warning 
+
+
+Write-Debug [-Message] <string> [<CommonParameters>]
+
+Write-Output [-InputObject] <psobject[]> [<CommonParameters>]
+
+Write-Verbose [-Message] <string> [<CommonParameters>]
+
+
+Write-Warning [-Message] <string> [<CommonParameters>]
+
+Write-Host [[-Object] <Object>] [-NoNewline] [-Separator <Object>] [-ForegroundColor <ConsoleColor>] [-BackgroundColor <ConsoleColor>] [<CommonParameters>]
+
+Write-Error [-Message] <string> [-Category <ErrorCategory>] [-ErrorId <string>] [-TargetObject <Object>] [-RecommendedAction <string>] [-CategoryActivity 
+<string>] [-CategoryReason <string>] [-CategoryTargetName <string>] [-CategoryTargetType <string>] [<CommonParameters>]
+
+Write-Error -Exception <Exception> [-Message <string>] [-Category <ErrorCategory>] [-ErrorId <string>] [-TargetObject <Object>] [-RecommendedAction 
+<string>] [-CategoryActivity <string>] [-CategoryReason <string>] [-CategoryTargetName <string>] [-CategoryTargetType <string>] [<CommonParameters>]
+
+Write-Error -ErrorRecord <ErrorRecord> [-RecommendedAction <string>] [-CategoryActivity <string>] [-CategoryReason <string>] [-CategoryTargetName <string>] 
+[-CategoryTargetType <string>] [<CommonParameters>]
+
+
+
+
+
+Write-Progress [-Activity] <string> [[-Status] <string>] [[-Id] <int>] [-PercentComplete <int>] [-SecondsRemaining <int>] [-CurrentOperation <string>] 
+[-ParentId <int>] [-Completed] [-SourceId <int>] [<CommonParameters>]
+
+
+
+
+
+
+

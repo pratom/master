@@ -1,0 +1,10 @@
+ Database ----------------------------------------------------------------------------------------------------------
+ TODO: CHECK : does a known working DSN work?
+ -------> TODO: CHECK : 64 bit OS
+ -----------> TODO: CHECK : WDAC
+ -----------> TODO: CHECK : native 9
+ -----------> TODO: CHECK : native 10
+ -----------> TODO: CHECK : native 11
+ -----------> TODO: CHECK : native 12
+
+TODO: CHECK : does this connection string connect?

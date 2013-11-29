@@ -1,0 +1,3 @@
+[string]$SCRIPT:DIRECTORY_PATH_OF_pratom_ATOM                   = $PSScriptRoot
+[string]$SCRIPT:DIRECTORY_PATH_OF_pratom_ATOM_ELECTRONS         = "$($SCRIPT:DIRECTORY_PATH_OF_pratom_ATOM)\ELECTRONS\"
+[string]$SCRIPT:DIRECTORY_PATH_OF_pratom_ATOM_NUCLEUS           = "$($SCRIPT:DIRECTORY_PATH_OF_pratom_ATOM)\NUCLEUS\"

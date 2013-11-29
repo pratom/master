@@ -1,0 +1,5 @@
+Exception calling "LoadFrom" with "1" argument(s): "Could not load file or assembly 'file:///C:\Users\jmaass\AppData\Local\Temp\poweryaml\shadow\YamlDotNet.Configuration.dll' or one of its dependencies. Operation is not supported. (Exception from HRESULT: 0x80131515)"
+* is the dll blocked from running?
+* does the dll exist?
+* is powershell using the latest version of .Net?
+

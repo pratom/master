@@ -1,0 +1,1 @@
+[int]$SCRIPT:pratom_logging_longest_logging_category_length = 10

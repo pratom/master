@@ -1,0 +1,162 @@
+
+logging.basicConfig(format='%(asctime)s %(levelname)s:%(message)s')
+log = logging.getLogger('SublimeTODO')
+log = logging.getLogger('SublimeTODO')
+
+
+
+$Logfile = "D:\Apps\Logs\$(gc env:computername).log"
+
+Function LogWrite
+{
+   Param ([string]$logstring)
+
+   Add-content $Logfile -value $logstring
+}
+
+Write-Host "My local computer name is: $env:computername"
+
+
+--------------------------------------------------------------------------------------------------
+I added a variable $ErrorLog which will be the path I log my errors to.
+
+Since the exception is piped to the catch block you can dump it through the pipeline variable: $_
+
+$ArchivePath = "X:\Archive" 
+$TargetPath = "C:\Example" 
+$MovedFiles = "C:\MovedFiles.txt" 
+$ErrorLog = "C:\ScriptErrors.txt"
+
+Get-ChildItem $TargetPath | ForEach-Object { 
+$FilePath = $_.fullname 
+Try 
+{ 
+Move-Item $FilePath $ArchivePath 
+$FilePath | Add-Content $MovedFiles 
+} 
+Catch 
+{ 
+"ERROR moving $filename:    $_" | Add-Content $ErrorLog 
+} 
+}
+--------------------------------------------------------------------------------------------------
+
+
+<#
+To create a new source for an event log, administrative privileges are required. 
+But the nice thing is that you only have to do this once for the source. 
+When it is installed on the computer, you don’t have to worry about it again. 
+Additionally, you can leverage Windows PowerShell to make the change across multiple machines by supplying the ComputerName parameter. 
+You can also use this to create an event log specifically for your script or to create a source for event logs other than the Application log.
+#>
+
+
+Write-EventLog –LogName Application –Source “My Script” –EntryType Information –EventID 1 –Message “This is a test message.”
+
+Write-EventLog [-LogName] <String> [-Source] <String> [-EventId] <Int32> [[-EntryType] <EventLogEntryType> ] [-Message] <String> [-Category <Int16> ] [-ComputerName <String> ] [-RawData <Byte[]> ] [ <CommonParameters>]
+-EntryType<EventLogEntryType>
+Specifies the entry type of the event. Valid values are Error, Warning, Information, SuccessAudit, and FailureAudit. The default value is Information.
+-EventId<Int32>
+Specifies the event identifier. This parameter is required.
+-LogName<String>
+Specifies the name of the log to which the event is written. Enter the log name (the value of the Log property, not the LogDisplayName). Wildcard characters are not permitted. This parameter is required.
+-Message<String>
+Specifies the event message. This parameter is required.
+-Source<String>
+Specifies the event source, which is typically the name of the application that is writing the event to the log.
+
+
+
+Function does_windows_event_log_exist
+{
+    [cmdletbinding()]
+    Param (
+        [Parameter(Mandatory=$True)][string]$log_name
+    )
+    [bool]$ret_exists=$false
+    [string]$found = get-winevent -listlog * | where { $_.LogName -eq "Setup" } | select LogName
+    if ( $found -ne $null )
+        {
+            $ret_exists=$true
+        }
+    else 
+        {
+            $ret_exists=$false
+        }
+    return $ret_exists
+} 
+
+$PRIVATE:RAILS_EVENT_LOG_NAME='RAILS'
+Function create_event_log_for_rails
+{
+    if ((does_windows_event_log_exist -log_name:$RAILS_EVENT_LOG_NAME) -eq $false )
+    {
+        if (is_admin -eq $false)
+        {
+            write-error "The event log,($RAILS_INSTANCE_NAME), does not exist on this machine.  We would create it, but in order to do so, this session must be running as an administrator."
+        }
+        else {
+            New-EventLog –LogName:$RAILS_EVENT_LOG_NAME –Source “got_me”
+            Limit-EventLog  –LogName:$RAILS_EVENT_LOG_NAME -MaximumSize:4294967296 -OverflowAction:OverwriteAsNeeded
+            #4294967296 bytes = 4 GB = maximum size of log
+            #2147483648 bytes = 2 GB
+        }
+    }
+}
+
+Function create_event_log_source_for_rails_instance
+{
+
+}
+
+[string]$PRIVATE:RAILS_INSTANCE_NAME = $null
+Function RAILS_INSTANCE_NAME
+{
+    if ( $PRIVATE:RAILS_INSTANCE_NAME -eq $null )
+    {
+        $PRIVATE:RAILS_INSTANCE_NAME = "($env:computername)_"
+        ComputerName
+        datetime
+        random number
+        entry point    
+    }
+    
+    return $PRIVATE:RAILS_INSTANCE_NAME
+}
+
+
+
+<#
+
+   $Event
+        Contains a PSEventArgs object that represents the event that is being
+        processed.  This variable is populated only within the Action block of
+        an event registration command, such as Register-ObjectEvent. The value
+        of this variable is the same object that the Get-Event cmdlet returns. 
+        Therefore, you can use the properties of the $Event variable, such as
+        $Event.TimeGenerated , in an Action script block.
+
+    $EventArgs
+        Contains an object that represents the first event argument that derives
+        from EventArgs of the event that is being processed. This variable is
+        populated only within the Action block of an event registration command.
+        The value of this variable can also be found in the SourceEventArgs
+        property  of the PSEventArgs (System.Management.Automation.PSEventArgs) 
+        object that Get-Event returns.
+
+    $EventSubscriber
+        Contains a PSEventSubscriber object that represents the event subscriber
+        of the event that is being processed. This variable is populated only
+        within the Action block of an event registration command. The value of
+        this variable is the same object that the Get-EventSubscriber cmdlet
+        returns.
+
+#>
+
+
+
+
+
+
+
+
